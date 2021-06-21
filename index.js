@@ -29,13 +29,13 @@ app.get('/', (request, response) => {
 })
 
 app.get('/api/persons', (request, response) => {
+  console.log(persons);
   response.json(persons)
 })
 
-app.get('api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
   const person = persons.find(person => person.id === id)
-  
   if (person) {
     response.json(person)
   } else {
@@ -43,11 +43,16 @@ app.get('api/persons/:id', (request, response) => {
   }
 })
 
-let ts = Date.now();
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  persons = persons.filter(person => person.id !== id)
 
-let date = new Date()
+  response.status(204).end()
+})
+
 
 app.get('/info', (request, response) => {
+  let date = new Date()
   response.send(`<p>Phonebook has info for ${persons.length} people</p>
                  <p> ${date} </p>`)
 })
