@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 let persons = [
   {
     id: 1,
@@ -24,12 +26,16 @@ let persons = [
   }
 ]
 
+// const morgan = ('tiny')
+
+// app.use(morgan)
+
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
 })
 
 app.get('/api/persons', (request, response) => {
-  console.log(persons);
+  // console.log(persons);
   response.json(persons)
 })
 
@@ -55,6 +61,12 @@ app.get('/info', (request, response) => {
   let date = new Date()
   response.send(`<p>Phonebook has info for ${persons.length} people</p>
                  <p> ${date} </p>`)
+})
+
+app.post('/api/persons', (request, response) => {
+  const person = request.body
+  person.id = Math.floor(Math.random() * 200)
+  response.json(person)
 })
 
 const PORT = 3001
