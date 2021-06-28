@@ -65,8 +65,24 @@ app.get('/info', (request, response) => {
 
 app.post('/api/persons', (request, response) => {
   const person = request.body
+  console.log(person)
+  if (!person.name || !person.phone) {
+    return response.status(400).json({
+      error: 'Each entry must have a name and phone number'
+    })
+  }
+
+  if (persons.some((p) => p.name === person.name)) {
+    return response.status(400).json({
+      error: 'Each name must be unique'
+    })
+  }
+
   person.id = Math.floor(Math.random() * 200)
+  persons.push(person)
   response.json(person)
+  
+  
 })
 
 const PORT = 3001
