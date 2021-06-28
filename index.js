@@ -72,15 +72,16 @@ app.post('/api/persons', (request, response) => {
     })
   }
 
-  if (person.name !== undefined && person.name !== null) {
+  if (persons.some((p) => p.name === person.name)) {
     return response.status(400).json({
       error: 'Each name must be unique'
     })
   }
 
   person.id = Math.floor(Math.random() * 200)
+  persons.push(person)
   response.json(person)
-
+  
   
 })
 
