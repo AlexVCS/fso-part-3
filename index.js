@@ -1,7 +1,9 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 
 app.use(express.json())
+app.use(morgan('tiny'))
 
 let persons = [
   {
@@ -25,10 +27,6 @@ let persons = [
     number: "239-3201"
   }
 ]
-
-// const morgan = ('tiny')
-
-// app.use(morgan)
 
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
@@ -81,8 +79,6 @@ app.post('/api/persons', (request, response) => {
   person.id = Math.floor(Math.random() * 200)
   persons.push(person)
   response.json(person)
-  
-  
 })
 
 const PORT = 3001
