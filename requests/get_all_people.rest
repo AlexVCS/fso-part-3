@@ -1,1 +1,2 @@
-GET http://localhost:3001/api/persons
+POST http://localhost:3001/api/persons
+'name'='Sindesus Liseda'&'number'='727 308-3405'

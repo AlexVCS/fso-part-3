@@ -4,6 +4,7 @@ const morgan = require("morgan");
 
 app.use(express.json());
 app.use(morgan("tiny"));
+morgan.token("body", (req) => JSON.stringify(req.body))
 
 let persons = [
 	{
@@ -62,7 +63,7 @@ app.get("/info", (request, response) => {
 
 app
 	.use(morgan(":method :url :status :res[content-length] :body"))
-	.post("/api/persons", (request, response) => {
+	.post("/api/persons/", (request, response) => {
 		const person = request.body;
 		// console.log(person)
 		if (!person.name || !person.phone) {
@@ -77,8 +78,7 @@ app
 			});
 		}
 
-		morgan.token("body", (req) => JSON.stringify(req.body));
-		person.id = Math.floor(Math.random() * 200);
+		person.id = Math.floor(Math.random() * 200)
 		persons.push(person);
 		response.json(person);
 	});
